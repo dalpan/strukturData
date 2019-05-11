@@ -1,0 +1,312 @@
+
+dalpan@sistembasisdata:~$ sudo /opt/lampp/bin/mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 18
+Server version: 10.1.37-MariaDB Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| handphone_db       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
+| wordpress_data     |
++--------------------+
+7 rows in set (0.00 sec)
+
+MariaDB [(none)]> create database e_voting;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> use e_voting;
+Database changed
+MariaDB [e_voting]> create table t_admin (id_admin tinyint(1) not null, username varchar(35) not null, fullname varchar(50) not null, password varchar(255), primary key(id_admin) );
+Query OK, 0 rows affected (0.54 sec)
+
+MariaDB [e_voting]> show tables;
++--------------------+
+| Tables_in_e_voting |
++--------------------+
+| t_admin            |
++--------------------+
+1 row in set (0.01 sec)
+
+MariaDB [e_voting]> desc t_admin;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| id_admin | tinyint(1)   | NO   | PRI | NULL    |       |
+| username | varchar(35)  | NO   |     | NULL    |       |
+| fullname | varchar(50)  | NO   |     | NULL    |       |
+| password | varchar(255) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+MariaDB [e_voting]> rename table t_admin to table_admin;
+Query OK, 0 rows affected (0.73 sec)
+
+MariaDB [e_voting]> alter table table_admin add email varchar(35);
+Query OK, 0 rows affected (1.30 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [e_voting]> desc table_admin;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| id_admin | tinyint(1)   | NO   | PRI | NULL    |       |
+| username | varchar(35)  | NO   |     | NULL    |       |
+| fullname | varchar(50)  | NO   |     | NULL    |       |
+| password | varchar(255) | YES  |     | NULL    |       |
+| email    | varchar(35)  | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+MariaDB [e_voting]> alter table table_admin change password password varchar(255) not null;
+Query OK, 0 rows affected (1.08 sec)               
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [e_voting]> desc table_admin;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| id_admin | tinyint(1)   | NO   | PRI | NULL    |       |
+| username | varchar(35)  | NO   |     | NULL    |       |
+| fullname | varchar(50)  | NO   |     | NULL    |       |
+| password | varchar(255) | NO   |     | NULL    |       |
+| email    | varchar(35)  | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+MariaDB [e_voting]> alter table table_admin drop email;
+Query OK, 0 rows affected (0.81 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [e_voting]> desc table_admin;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| id_admin | tinyint(1)   | NO   | PRI | NULL    |       |
+| username | varchar(35)  | NO   |     | NULL    |       |
+| fullname | varchar(50)  | NO   |     | NULL    |       |
+| password | varchar(255) | NO   |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+MariaDB [e_voting]> insert into table_admin (id_admin, username, fullname, password) values ('1','dalpan','Danang Avan Maulana','pasword123');
+Query OK, 1 row affected (0.31 sec)
+
+MariaDB [e_voting]> select *from table_admin;
++----------+----------+---------------------+------------+
+| id_admin | username | fullname            | password   |
++----------+----------+---------------------+------------+
+|        1 | dalpan   | Danang Avan Maulana | pasword123 |
++----------+----------+---------------------+------------+
+1 row in set (0.00 sec)
+
+MariaDB [e_voting]> select username, password from table_admin;
++----------+------------+
+| username | password   |
++----------+------------+
+| dalpan   | pasword123 |
++----------+------------+
+1 row in set (0.00 sec)
+
+MariaDB [e_voting]> insert into table_admin (id_admin, username, fullname, password) values ('2','sbd','Sistem Basis Data','pasword123');
+Query OK, 1 row affected (0.07 sec)
+
+MariaDB [e_voting]> select *from table_admin;
++----------+----------+---------------------+------------+
+| id_admin | username | fullname            | password   |
++----------+----------+---------------------+------------+
+|        1 | dalpan   | Danang Avan Maulana | pasword123 |
+|        2 | sbd      | Sistem Basis Data   | pasword123 |
++----------+----------+---------------------+------------+
+2 rows in set (0.00 sec)
+
+MariaDB [e_voting]> update table_admin set password='sbd12345' where password='password123';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+MariaDB [e_voting]> select *from table_admin;
++----------+----------+---------------------+------------+
+| id_admin | username | fullname            | password   |
++----------+----------+---------------------+------------+
+|        1 | dalpan   | Danang Avan Maulana | pasword123 |
+|        2 | sbd      | Sistem Basis Data   | pasword123 |
++----------+----------+---------------------+------------+
+2 rows in set (0.00 sec)
+
+MariaDB [e_voting]> update table_admin set password='sbd12345' where username='sbd';
+Query OK, 1 row affected (0.32 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [e_voting]> select *from table_admin;
++----------+----------+---------------------+------------+
+| id_admin | username | fullname            | password   |
++----------+----------+---------------------+------------+
+|        1 | dalpan   | Danang Avan Maulana | pasword123 |
+|        2 | sbd      | Sistem Basis Data   | sbd12345   |
++----------+----------+---------------------+------------+
+2 rows in set (0.00 sec)
+
+MariaDB [e_voting]> delete from table_admin where username='sbd';
+Query OK, 1 row affected (0.31 sec)
+
+MariaDB [e_voting]> select *from table_admin;
++----------+----------+---------------------+------------+
+| id_admin | username | fullname            | password   |
++----------+----------+---------------------+------------+
+|        1 | dalpan   | Danang Avan Maulana | pasword123 |
++----------+----------+---------------------+------------+
+1 row in set (0.00 sec)
+
+MariaDB [e_voting]> create table kandidat (id_kandidat smallint(4) not null, nama_calon varchar(50) not null, visi varchar(255) not null, misi varchar(255) not null, suara smallint(4) not null, periode varchar(9) not null, primary key(id_kandidat));
+Query OK, 0 rows affected (0.87 sec)
+
+MariaDB [e_voting]> select *from table_admin;
++----------+----------+---------------------+------------+
+| id_admin | username | fullname            | password   |
++----------+----------+---------------------+------------+
+|        1 | dalpan   | Danang Avan Maulana | pasword123 |
++----------+----------+---------------------+------------+
+1 row in set (0.00 sec)
+
+MariaDB [e_voting]> desc e_voting;
+ERROR 1146 (42S02): Table 'e_voting.e_voting' doesn't exist
+MariaDB [e_voting]> show e_voting;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'e_voting' at line 1
+MariaDB [e_voting]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| e_voting           |
+| handphone_db       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
+| wordpress_data     |
++--------------------+
+8 rows in set (0.00 sec)
+
+MariaDB [e_voting]> select *from kandidat;
+Empty set (0.00 sec)
+
+MariaDB [e_voting]> insert into kandidat (id_kandidat, nama_calon, visi, misi, suara, periode) values ('1','Danang Avan Maulana','Maju bersama','UTY Jogja','1','2019/2020'),('2','Odie Evan Maulana','Mundur bersama','UTY Jogja','0','2019/2020');
+Query OK, 2 rows affected (0.32 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [e_voting]> select *from kandidat;
++-------------+---------------------+----------------+-----------+-------+-----------+
+| id_kandidat | nama_calon          | visi           | misi      | suara | periode   |
++-------------+---------------------+----------------+-----------+-------+-----------+
+|           1 | Danang Avan Maulana | Maju bersama   | UTY Jogja |     1 | 2019/2020 |
+|           2 | Odie Evan Maulana   | Mundur bersama | UTY Jogja |     0 | 2019/2020 |
++-------------+---------------------+----------------+-----------+-------+-----------+
+2 rows in set (0.00 sec)
+
+MariaDB [e_voting]> create table pemilih (nim varchar(10) not null, periode varchar(9) not null, primary key (nim);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [e_voting]> create table pemilih (nim varchar(10) not null, periode varchar(9) not null, primary key (nim));
+Query OK, 0 rows affected (0.76 sec)
+
+MariaDB [e_voting]> insert into pemilih ('5180411091','2019/2020'),('5180411092','2019/2020'),('5180411093','2019/2020');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''5180411091','2019/2020'),('5180411092','2019/2020'),('5180411093','2019/2020')' at line 1
+MariaDB [e_voting]> insert into pemilih ('5180411091','2019/2020');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''5180411091','2019/2020')' at line 1
+MariaDB [e_voting]> insert into pemilih values ('5180411091','2019/2020'),('5180411092','2019/2020'),('5180411093','2019/2020');
+Query OK, 3 rows affected (0.06 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [e_voting]> create table user (id_user varchar(10) not null, fullname varchar(50) not null, pemilih enum('Y','N') not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [e_voting]> create table user (id_user varchar(10) not null, fullname varchar(50) not null, pemilih enum() not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') not null' at line 1
+MariaDB [e_voting]> create table user (id_user varchar(10) not null, fullname varchar(50) not null, pemilih enum('Y','N') not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [e_voting]> create table user (id_user varchar(10) not null, fullname varchar(50) not null, pemilih enum(Y,N) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Y,N) not null' at line 1
+MariaDB [e_voting]> create table user (id_user varchar(10) not null, fullname varchar(50) not null, pemilih enum(Y) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Y) not null' at line 1
+MariaDB [e_voting]> create table user (id_user varchar(10) not null, fullname varchar(50) not null, pemilih varchar(2)  not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [e_voting]> create table user (id_user varchar(10) not null, fullname varchar(50) not null, pemilih enum('Y','N') not null);
+Query OK, 0 rows affected (0.65 sec)
+
+MariaDB [e_voting]> insert into user (id_user,fullname,pemilih) values ('2155','Citra Kirana','Y'),('2152','Abang Saleh','Y'),('2153','Upin','N'),('2151','Ipin','Y');
+Query OK, 4 rows affected (0.08 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [e_voting]> select *from user;
++---------+--------------+---------+
+| id_user | fullname     | pemilih |
++---------+--------------+---------+
+| 2155    | Citra Kirana | Y       |
+| 2152    | Abang Saleh  | Y       |
+| 2153    | Upin         | N       |
+| 2151    | Ipin         | Y       |
++---------+--------------+---------+
+4 rows in set (0.00 sec)
+
+MariaDB [e_voting]> show database e_voting;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'database e_voting' at line 1
+MariaDB [e_voting]> show database
+    -> e_voting;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'database
+e_voting' at line 1
+MariaDB [e_voting]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| e_voting           |
+| handphone_db       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
+| wordpress_data     |
++--------------------+
+8 rows in set (0.01 sec)
+
+MariaDB [e_voting]> show databases e_voting;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'e_voting' at line 1
+MariaDB [e_voting]> show e_voting;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'e_voting' at line 1
+MariaDB [e_voting]> show tables;
++--------------------+
+| Tables_in_e_voting |
++--------------------+
+| kandidat           |
+| pemilih            |
+| table_admin        |
+| user               |
++--------------------+
+4 rows in set (0.00 sec)
+
+MariaDB [e_voting]> drop database e_voting;
+Query OK, 4 rows affected (0.78 sec)
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| handphone_db       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
+| wordpress_data     |
++--------------------+
+7 rows in set (0.00 sec)
+
+MariaDB [(none)]> 
